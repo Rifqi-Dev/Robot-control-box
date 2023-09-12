@@ -3,6 +3,8 @@ import socketio
 import base64
 import io
 import time
+import os
+import json
 
 # Initialize Socket.io client
 sio = socketio.Client()
@@ -12,6 +14,9 @@ sio.connect('http://localhost:3001')
 
 # Initialize the webcam
 cap = cv2.VideoCapture(0)
+
+with open(os.path.join(os.getcwd(),"Robot","app","config.json")) as f:
+    sio.emit("pythonJson",json.load(f))
 
 while True:
     ret, frame = cap.read()

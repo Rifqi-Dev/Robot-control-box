@@ -2,8 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Homepage";
 
-const socket = io("http://localhost:3001");
+const socket = io("http://192.168.1.103:3001");
 
 function App() {
   const [image, setImage] = useState("");
@@ -18,9 +20,15 @@ function App() {
     // Listen for incoming video frames
 
     socket.on("reactReply", (data) => {
-      console.log(data);
+      // console.log(data);
       const imageData = `data:image/jpeg;base64,${data}`;
       setImage(imageData);
+    });
+
+    socket.emit("reactGetJSON", "1");
+
+    socket.on("frompythonJson", (data) => {
+      console.log(data);
     });
 
     socket.on("stream", (data) => {
@@ -36,15 +44,14 @@ function App() {
       setCount(() => {
         return count + 1;
       });
-    }, 1);
+    }, 50);
 
     return () => clearInterval(interval);
   }, [count]);
 
   return (
-    <div className="App">
-      <h1>tes kirim kamera</h1>
-      {image && <img src={image} alt="Video Stream" />}
+    <div className="App ">
+      <Home />
     </div>
   );
 }
