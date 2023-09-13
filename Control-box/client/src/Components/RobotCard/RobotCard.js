@@ -2,7 +2,7 @@ import React from "react";
 
 function RobotCard({ robotName }) {
   return (
-    <div className="text-white bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-md bg-opacity-30 border border-gray-100 w-[380px] h-[400px] rounded-md flex">
+    <div className="text-white bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 w-[380px] h-[400px] rounded-md flex">
       <div className="w-[150px] h-[250px] bg-red-200 rounded-md mt-3 ml-3">
         <img></img>
       </div>

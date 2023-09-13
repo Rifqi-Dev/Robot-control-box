@@ -5,6 +5,5 @@
 body {
   background-image: url("./assets/Desain tanpa judul 2.png");
   background-size: cover;
-    background-repeat: no-repeat;
-    
+  /* background-repeat: no-repeat; */
 }
