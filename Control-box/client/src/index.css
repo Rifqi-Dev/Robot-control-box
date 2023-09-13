@@ -3,5 +3,8 @@
 @tailwind utilities;
 
 body {
-  background-image: url("./assets/background.png");
+  background-image: url("./assets/1 2.png");
+  background-size: cover;
+    background-repeat: no-repeat;
+    
 }

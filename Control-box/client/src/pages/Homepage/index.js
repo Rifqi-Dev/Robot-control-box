@@ -3,6 +3,7 @@ import { Tabs, Tab, TabsHeader } from "@material-tailwind/react";
 import RobotCard from "../../Components/RobotCard/RobotCard";
 import HomeComponent from "../../Components/HomeComponent/Index";
 import { useState } from "react";
+import RobotComponent from "../../Components/RobotComponent";
 function Home() {
   const [selected, setSelect] = useState("home");
   const data = [
@@ -25,9 +26,9 @@ function Home() {
   ];
   const components = {
     home: <HomeComponent />,
-    robot1: <div className="text-white">Robot1</div>,
-    robot2: <div className="text-white">Robot2</div>,
-    robot3: <div className="text-white">Robot3</div>,
+    robot1: <RobotComponent robotName="Robot 1" />,
+    robot2: <RobotComponent robotName="Robot 2" />,
+    robot3: <RobotComponent robotName="Robot 3" />,
   };
   return (
     <div className="flex flex-col items-center ">
