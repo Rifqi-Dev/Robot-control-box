@@ -32,7 +32,7 @@ function Home() {
   };
   return (
     <div className="flex flex-col items-center ">
-      <div className="w-[80%] top-2 absolute ">
+      <div className="w-[80%] pt-12 absolute ">
         <Tabs value="home">
           <TabsHeader>
             {data.map(({ label, value }) => (
