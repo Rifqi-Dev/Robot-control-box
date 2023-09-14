@@ -132,8 +132,47 @@ export default function RobotComponent({ robotName }) {
             </div>
           </div>
         </div>
-        <div className="mt-5 bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 w-full">
-          Control Panel
+        <div className="mt-5 bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 w-full p-2 flex gap-3 justify-evenly">
+          <div>
+            <h4 className="font-bold">Robot Vision Data</h4>
+            <div className="flex">
+              <p className="text-[14px] flex-1">Ball Degree</p>
+              <p className="text-[14px]">: 360</p>
+            </div>
+            <div className="flex">
+              <p className="text-[14px] flex-1">Ball Posisiton</p>
+              <p className="text-[14px]">: 1</p>
+            </div>
+          </div>
+          <div>
+            <h4 className="font-bold">Robot Odometry Data</h4>
+            <div className="flex">
+              <p className="text-[14px] flex-1">X Posisiton</p>
+              <p className="text-[14px]">: 100</p>
+            </div>
+            <div className="flex">
+              <p className="text-[14px] flex-1">Y Posisiton</p>
+              <p className="text-[14px]">: 50</p>
+            </div>
+            <div className="flex">
+              <p className="text-[14px] flex-1">Rotation</p>
+              <p className="text-[14px]">: 50</p>
+            </div>
+          </div>
+          <div>
+            <h4 className="font-bold">Robot Referee Data</h4>
+            <div className="flex">
+              <p className="text-[14px] flex-1">Command</p>
+              <p className="text-[14px]">: KickOff Magenta</p>
+            </div>
+          </div>
+          <div>
+            <h4 className="font-bold">Robot Basestation Data</h4>
+            <div className="flex">
+              <p className="text-[14px] flex-1">Robot Message</p>
+              <p className="text-[14px]">: pos 1</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
