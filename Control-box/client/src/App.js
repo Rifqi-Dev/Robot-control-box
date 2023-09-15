@@ -5,7 +5,7 @@ import io from "socket.io-client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Homepage";
 
-const socket = io("http://192.168.1.103:3001");
+const socket = io("http://localhost:3001");
 
 function App() {
   const [image, setImage] = useState("");
@@ -51,7 +51,7 @@ function App() {
 
   return (
     <div className="App ">
-      <Home />
+      <Home robot1={image} />
     </div>
   );
 }
