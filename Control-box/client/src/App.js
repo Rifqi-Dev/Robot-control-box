@@ -49,9 +49,13 @@ function App() {
     return () => clearInterval(interval);
   }, [count]);
 
+  const onChangeData = (robot, data) => {
+    console.log(robot, data);
+  };
+
   return (
     <div className="App ">
-      <Home robot1={image} />
+      <Home robot1={image} onChange={onChangeData} />
     </div>
   );
 }

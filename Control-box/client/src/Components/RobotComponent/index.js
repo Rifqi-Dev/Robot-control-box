@@ -9,7 +9,7 @@ import {
   TabsHeader,
 } from "@material-tailwind/react";
 
-export default function RobotComponent({ robotName, robotData }) {
+export default function RobotComponent({ robotName, robotData, onChange }) {
   return (
     <div key={robotName} className="flex justify-center">
       <div className="text-white flex flex-col">
@@ -79,7 +79,11 @@ export default function RobotComponent({ robotName, robotData }) {
               <div className="ml-14">
                 <div>
                   <label>Lower Hue</label>
-                  <Slider color="red" defaultValue={50} />
+                  <Slider
+                    color="red"
+                    defaultValue={50}
+                    onChange={(e) => onChange("robot1", e.target.value)}
+                  />
                 </div>
                 <div className="my-4">
                   <label>Lower Saturation</label>
