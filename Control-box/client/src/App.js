@@ -11,6 +11,7 @@ function App() {
   const [image, setImage] = useState("");
   const [connected, setConnected] = useState(false);
   const [count, setCount] = useState(0);
+  const [robotData, setRobotData] = useState({});
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -31,8 +32,12 @@ function App() {
       console.log(data);
     });
 
+    socket.on("robotData", (data) => {
+      setRobotData(data);
+    });
+
     socket.on("stream", (data) => {
-      console.log(2);
+      // console.log(2);
       const imageData = `data:image/jpeg;base64,${data}`;
       setImage(imageData);
     });
@@ -50,12 +55,13 @@ function App() {
   }, [count]);
 
   const onChangeData = (robot, data) => {
-    console.log(robot, data);
+    // console.log(robot, data);
+    socket.emit("LH", data);
   };
 
   return (
     <div className="App ">
-      <Home robot1={image} onChange={onChangeData} />
+      <Home robot1={image} robot1data={robotData} onChange={onChangeData} />
     </div>
   );
 }

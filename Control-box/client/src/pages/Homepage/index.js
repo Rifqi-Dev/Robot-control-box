@@ -5,7 +5,7 @@ import HomeComponent from "../../Components/HomeComponent/Index";
 import { useState } from "react";
 import RobotComponent from "../../Components/RobotComponent";
 
-function Home({ robot1, onChange }) {
+function Home({ robot1, robot1data, onChange }) {
   const [selected, setSelect] = useState("home");
   const data = [
     {
@@ -32,6 +32,7 @@ function Home({ robot1, onChange }) {
         robotName="Robot 1"
         robotData={robot1}
         onChange={onChange}
+        data={robot1data}
       />
     ),
     robot2: <RobotComponent robotName="Robot 2" />,

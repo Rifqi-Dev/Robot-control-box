@@ -8,8 +8,15 @@ import {
   Tabs,
   TabsHeader,
 } from "@material-tailwind/react";
+import { useState } from "react";
 
-export default function RobotComponent({ robotName, robotData, onChange }) {
+export default function RobotComponent({
+  robotName,
+  robotData,
+  onChange,
+  data,
+}) {
+  const [lhvalue, setlh] = useState(0);
   return (
     <div key={robotName} className="flex justify-center">
       <div className="text-white flex flex-col">
@@ -82,7 +89,11 @@ export default function RobotComponent({ robotName, robotData, onChange }) {
                   <Slider
                     color="red"
                     defaultValue={50}
-                    onChange={(e) => onChange("robot1", e.target.value)}
+                    value={lhvalue}
+                    onChange={(e) => {
+                      onChange("robot1", e.target.value);
+                      setlh(e.target.value);
+                    }}
                   />
                 </div>
                 <div className="my-4">
@@ -141,7 +152,7 @@ export default function RobotComponent({ robotName, robotData, onChange }) {
             <h4 className="font-bold">Robot Vision Data</h4>
             <div className="flex">
               <p className="text-[14px] flex-1">Ball Degree</p>
-              <p className="text-[14px]">: 360</p>
+              <p className="text-[14px]">: {data.robotDegree}</p>
             </div>
             <div className="flex">
               <p className="text-[14px] flex-1">Ball Posisiton</p>
