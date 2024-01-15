@@ -6,11 +6,117 @@ import time
 import threading
 import math
 import random
+import os
+import json
 
 jpg_data = ''
 
 LHData = 0
 robotDegree = 0
+
+def loadConfigFile():
+  configFile = 'config.json'
+  dir = __file__.split('\\')
+  dirLength = len(dir)
+  dir[dirLength-1] = configFile
+
+  configFileDir = '\\'.join(dir)
+  if not os.path.exists(configFileDir):
+    config = {
+    "Kamera": {
+        "Omnivision": 0,
+        "FrontCam": 1,
+        "State": False
+    },
+    "Bola": {
+        "L-H": 0,
+        "L-S": 0,
+        "L-V": 0,
+        "U-H": 0,
+        "U-S": 0,
+        "U-V": 0
+    },
+    "Bola2": {
+        "L-H": 0,
+        "L-S": 0,
+        "L-V": 0,
+        "U-H": 0,
+        "U-S": 0,
+        "U-V": 0
+    },
+    "Cyan": {
+        "pos": "CF",
+        "L-H": 0,
+        "L-S": 0,
+        "L-V": 0,
+        "U-H": 0,
+        "U-S": 0,
+        "U-V": 0
+    },
+    "Magenta": {
+        "pos": "MO",
+        "L-H": 0,
+        "L-S": 0,
+        "L-V": 0,
+        "U-H": 0,
+        "U-S": 0,
+        "U-V": 0
+    },
+    "Setting": {
+        "kamera1": {
+            "f": 0,
+            "b": 0,
+            "c": 0,
+            "s": 0,
+            "g": 0,
+            "e": 0,
+            "w": 0
+        },
+        "kamera2": {
+            "f": 0,
+            "b": 0,
+            "c": 0,
+            "s": 0,
+            "g": 0,
+            "e": 0,
+            "w": 0
+        }
+    },
+    "Robot": {
+        "type": "P2",
+        "tim": "c",
+        "gawang": "ka"
+    },
+    "HomePos": {
+        "kiri": {
+            "P1": {
+                "HX": 2,
+                "HY": 4.5
+            },
+            "P2": {
+                "HX": -2,
+                "HY": 4.5
+            }
+        },
+        "kanan": {
+            "P1": {
+                "HX": -2,
+                "HY": -4.5
+            },
+            "P2": {
+                "HX": 2,
+                "HY": -4.5
+            }
+        },
+        "Rot": 0,
+        "Rot0": 2
+      }
+    }
+    with open(configFileDir,'w') as f:
+      json.dump(config,f,indent=4)
+
+  with open(configFileDir,'r') as f:
+    return json.load(f)
 
 def robotData():
   global robotDegree
@@ -46,11 +152,13 @@ sio = socketio.Server(cors_allowed_origins='*')
 
 @sio.event
 def connect(sid, environ):
-    print(f"Connected: {sid}")
+  sio.emit('configData',loadConfigFile())
+  print(f"Connected: {sid}")
 
 @sio.event
 def react(sid,msg):
-  #  print(msg)
+#    print(msg)
+   sio.emit("latency_robot1",{"latency":round(time.time_ns()/1000000)-int(msg),"time":msg})
    sio.emit('stream', jpg_data)
    sio.emit('robotData',{'robotDegree':robotDegree})
 
@@ -77,5 +185,5 @@ threading.Thread(target=robotData).start()
 socketio.Middleware(app)
 # socketio.Server(app)
 socketio.WSGIApp(sio)
-eventlet.wsgi.server(eventlet.listen(('localhost', 3001)), app)
+eventlet.wsgi.server(eventlet.listen(('192.168.1.106', 3001)), app)
 

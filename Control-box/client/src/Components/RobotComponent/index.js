@@ -152,7 +152,7 @@ export default function RobotComponent({
             <h4 className="font-bold">Robot Vision Data</h4>
             <div className="flex">
               <p className="text-[14px] flex-1">Ball Degree</p>
-              <p className="text-[14px]">: {data.robotDegree}</p>
+              <p className="text-[14px]">: {data?.robotDegree}</p>
             </div>
             <div className="flex">
               <p className="text-[14px] flex-1">Ball Posisiton</p>
