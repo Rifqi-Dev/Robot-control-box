@@ -5,7 +5,8 @@ import HomeComponent from "../../Components/HomeComponent/Index";
 import { useState } from "react";
 import RobotComponent from "../../Components/RobotComponent";
 
-function Home({ robot1, robot1data, onChange, RobotCon }) {
+function Home({ robot1data }) {
+  // console.log(robot1data);
   const [selected, setSelect] = useState("home");
   const data = [
     {
@@ -26,17 +27,18 @@ function Home({ robot1, robot1data, onChange, RobotCon }) {
     },
   ];
   const components = {
-    home: <HomeComponent robotCon={RobotCon} />,
+    home: <HomeComponent robot1data={robot1data} />,
     robot1: (
-      <RobotComponent
-        robotName="Robot 1"
-        robotData={robot1}
-        onChange={onChange}
-        data={robot1data}
-      />
+      <></>
+      // <RobotComponent
+      //   robotName="Robot 1"
+      //   robotData={robot1}
+      //   onChange={onChange}
+      //   data={robot1data}
+      // />
     ),
-    robot2: <RobotComponent robotName="Robot 2" />,
-    robot3: <RobotComponent robotName="Robot 3" />,
+    // robot2: <RobotComponent robotName="Robot 2" />,
+    // robot3: <RobotComponent robotName="Robot 3" />,
   };
   return (
     <div className="flex flex-col items-center ">

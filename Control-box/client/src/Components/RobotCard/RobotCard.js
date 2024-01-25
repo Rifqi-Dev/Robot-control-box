@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-function RobotCard({ robotName, robotCon }) {
-  setInterval(() => {
-    const timeNow = new Date().getTime();
-    if (robotCon) {
-      const deltaTime = timeNow - robotCon?.latency?.time;
-      robotCon.online = deltaTime < 1500;
-      robotCon.latency.latency = deltaTime;
-      // console.log(deltaTime);
-    }
-  }, 1);
+function RobotCard({ robotName, data }) {
+  const [online, setOnline] = useState(false);
+  const [latency, setLatency] = useState(0);
+  const [robotData, setRobotData] = useState({});
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      const timeNow = new Date().getTime();
+      if (data) {
+        const robotData = data.robotData;
+        setRobotData(robotData);
+        const deltaTime = timeNow - robotData?.connection_data?.time;
+        setOnline(deltaTime < 1500);
+        setLatency(deltaTime);
+      }
+    }, 50);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   return (
     <div className="text-white bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 w-[380px] h-[400px] rounded-md flex">
@@ -20,13 +28,11 @@ function RobotCard({ robotName, robotCon }) {
         <h1 className="text-2xl">{robotName}</h1>
         <div className="mt-4">
           <h5 className="text-green-500">
-            {robotCon?.online
-              ? `Online (${robotCon?.latency.latency}ms)`
-              : "Offline"}
+            {online ? `Online (${latency}ms)` : "Offline"}
           </h5>
-          <h5>{robotCon?.ip || "Not Connected"}</h5>
+          <h5>{robotData?.connection_data?.ip || "Not Connected"}</h5>
           <h5>Pos : 0, 0</h5>
-          <h5>Rot : 0</h5>
+          <h5>Rot : {robotData?.odometry_data?.robotDegree}</h5>
         </div>
       </div>
     </div>

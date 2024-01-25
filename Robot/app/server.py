@@ -121,10 +121,12 @@ def loadConfigFile():
 def robotData():
   global robotDegree
   while True:
-    robotDegree = random.randint(0,360)
+    robotDegree = robotDegree + 1
+    if(robotDegree>=360):
+        robotDegree = 0
     print(robotDegree)
     
-    time.sleep(0.8)
+    time.sleep(0.1)
 
 def imageProcessing():
     global sio, jpg_data
@@ -158,9 +160,9 @@ def connect(sid, environ):
 @sio.event
 def react(sid,msg):
 #    print(msg)
-   sio.emit("latency_robot1",{"latency":round(time.time_ns()/1000000)-int(msg),"time":msg})
-   sio.emit('stream', jpg_data)
-   sio.emit('robotData',{'robotDegree':robotDegree})
+   sio.emit("latencyData",{"latency":round(time.time_ns()/1000000)-int(msg),"time":msg})
+   sio.emit('cameraData', {"front_camera":jpg_data})
+   sio.emit('odometry_data',{'robotDegree':robotDegree})
 
 # @sio.event
 # def sendRobotData(sid,msg):
@@ -178,12 +180,12 @@ def LH(sid,msg):
 
 app = socketio.WSGIApp(sio)
 
-threading.Thread(target=imageProcessing).start()
+# threading.Thread(target=imageProcessing).start()
 threading.Thread(target=robotData).start()
 
 # Run the server on localhost and port 5000
 socketio.Middleware(app)
 # socketio.Server(app)
 socketio.WSGIApp(sio)
-eventlet.wsgi.server(eventlet.listen(('192.168.1.106', 3001)), app)
+eventlet.wsgi.server(eventlet.listen(('localhost', 3001)), app)
 
