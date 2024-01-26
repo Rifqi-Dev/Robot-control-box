@@ -29,13 +29,8 @@ function Home({ robot1data }) {
   const components = {
     home: <HomeComponent robot1data={robot1data} />,
     robot1: (
-      <></>
-      // <RobotComponent
-      //   robotName="Robot 1"
-      //   robotData={robot1}
-      //   onChange={onChange}
-      //   data={robot1data}
-      // />
+      // <></>
+      <RobotComponent robotName="Robot 1" robotData={robot1data} />
     ),
     // robot2: <RobotComponent robotName="Robot 2" />,
     // robot3: <RobotComponent robotName="Robot 3" />,

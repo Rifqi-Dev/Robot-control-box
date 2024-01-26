@@ -8,21 +8,33 @@ import {
   Tabs,
   TabsHeader,
 } from "@material-tailwind/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function RobotComponent({
-  robotName,
-  robotData,
-  onChange,
-  data,
-}) {
+export default function RobotComponent({ robotName, robotData }) {
   const [lhvalue, setlh] = useState(0);
+  const [image, setImage] = useState("");
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      if (robotData) {
+        // console.log();
+        if (robotData?.robotData?.camera_data?.front_camera !== "") {
+          setImage(
+            `data:image/jpeg;base64,${robotData.robotData.camera_data.front_camera}`
+          );
+        }
+      }
+    }, 1);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   return (
     <div key={robotName} className="flex justify-center">
       <div className="text-white flex flex-col">
         <div className="flex flex-row gap-5">
           <div className="flex items-center justify-center bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100  w-[300px] 2xl:w-[500px] aspect-[4/3]">
-            <img alt="Video Frame" src={robotData} />
+            <img alt="Video Frame" src={image} />
           </div>
           <div className="bg-gray-500 rounded-md bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100">
             <div className="w-full py-4 flex">
@@ -91,7 +103,7 @@ export default function RobotComponent({
                     defaultValue={50}
                     value={lhvalue}
                     onChange={(e) => {
-                      onChange("robot1", e.target.value);
+                      // onChange("robot1", e.target.value);
                       setlh(e.target.value);
                     }}
                   />
@@ -152,7 +164,7 @@ export default function RobotComponent({
             <h4 className="font-bold">Robot Vision Data</h4>
             <div className="flex">
               <p className="text-[14px] flex-1">Ball Degree</p>
-              <p className="text-[14px]">: {data?.robotDegree}</p>
+              <p className="text-[14px]">: 0</p>
             </div>
             <div className="flex">
               <p className="text-[14px] flex-1">Ball Posisiton</p>

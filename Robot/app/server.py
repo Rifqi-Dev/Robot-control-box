@@ -14,6 +14,10 @@ jpg_data = ''
 LHData = 0
 robotDegree = 0
 
+cameraData = {
+  'front_camera':''
+} 
+
 def loadConfigFile():
   configFile = 'config.json'
   dir = __file__.split('\\')
@@ -129,7 +133,7 @@ def robotData():
     time.sleep(0.1)
 
 def imageProcessing():
-    global sio, jpg_data
+    global sio, jpg_data, cameraData
     cap = cv2.VideoCapture(0)
     if not cap:
       print('cap not opened')
@@ -138,7 +142,7 @@ def imageProcessing():
       if ret:
         # Encode the frame as JPEG
         _, buffer = cv2.imencode('.jpg', frame)
-        jpg_data = str(base64.b64encode(buffer).decode('UTF-8'))
+        cameraData['front_camera'] = str(base64.b64encode(buffer).decode('UTF-8'))
 
         # Send the frame to the server using Socket.io
       frame = cv2.putText(frame,str(round((float(LHData)/100)*255)),(50,50),cv2.FONT_HERSHEY_SIMPLEX,2,(0,0,255))
@@ -161,7 +165,7 @@ def connect(sid, environ):
 def react(sid,msg):
 #    print(msg)
    sio.emit("latencyData",{"latency":round(time.time_ns()/1000000)-int(msg),"time":msg})
-   sio.emit('cameraData', {"front_camera":jpg_data})
+   sio.emit('cameraData', cameraData)
    sio.emit('odometry_data',{'robotDegree':robotDegree})
 
 # @sio.event
@@ -180,7 +184,7 @@ def LH(sid,msg):
 
 app = socketio.WSGIApp(sio)
 
-# threading.Thread(target=imageProcessing).start()
+threading.Thread(target=imageProcessing).start()
 threading.Thread(target=robotData).start()
 
 # Run the server on localhost and port 5000
